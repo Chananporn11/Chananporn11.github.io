@@ -1,41 +1,95 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>Mini TikTok Clone</title>
+  <meta charset="UTF-8" />
+  <title>Mini TikTok Clone with Like/Share/Download</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background: #000; color: #fff; }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+    }
     .feed {
-      width: 100%; height: 100vh; position: relative;
+      width: 100%;
+      height: 100vh;
+      position: relative;
       overflow: hidden;
     }
     .video-slide {
-      width: 100%; height: 100%;
-      position: absolute; top: 0; left: 0;
-      display: flex; align-items: center; justify-content: center;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: #111;
       transition: transform 0.5s ease-in-out;
     }
-    .video-slide video {
-      max-height: 80%; max-width: 100%;
+    video {
+      max-height: 80%;
+      max-width: 100%;
       border-radius: 8px;
     }
+    .controls {
+      position: absolute;
+      bottom: 100px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      color: #fff;
+      user-select: none;
+      font-size: 14px;
+      text-align: center;
+      z-index: 10;
+    }
+    .control-btn {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #ccc;
+      transition: color 0.3s;
+    }
+    .control-btn:hover {
+      color: #ff2e63;
+    }
+    .control-btn svg {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 5px;
+      fill: currentColor;
+    }
+    .count {
+      font-weight: bold;
+    }
     .nav-bottom {
-      position: absolute; bottom: 0; width: 100%;
-      height: 60px; background: rgba(20, 20, 20, 0.8);
-      display: flex; justify-content: space-around;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      background: rgba(20, 20, 20, 0.8);
+      display: flex;
+      justify-content: space-around;
       align-items: center;
       font-size: 14px;
+      z-index: 20;
     }
     .nav-bottom div {
-      text-align: center; color: #aaa;
+      text-align: center;
+      color: #aaa;
     }
     .nav-bottom div.active {
       color: #fff;
     }
     .nav-bottom img {
-      width: 24px; height: 24px;
+      width: 24px;
+      height: 24px;
       margin-bottom: 4px;
       filter: invert(1);
     }
@@ -43,23 +97,106 @@
 </head>
 <body>
   <div class="feed" id="feed">
-    <div class="video-slide" data-index="0">
+    <div class="video-slide" data-index="0" data-likes="123">
       <video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video>
+      <div class="controls">
+        <div class="control-btn like-btn" title="กดใจ">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42
+            3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3
+            19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span class="count">123</span>
+        </div>
+        <div class="control-btn share-btn" title="แชร์">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 16.08c-0.76 0-1.44 0.3-1.96 0.77L8.91
+            12.7c0.05-0.23 0.09-0.46 0.09-0.7s-0.03-0.47-0.09-0.7L15.96
+            7.1c0.53 0.5 1.23 0.81 2.04 0.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3
+            1.34-3 3c0 0.24 0.04 0.47 0.09 0.7L8.04 9.9C7.5 9.4 6.81 9.1
+            6 9.1c-1.66 0-3 1.34-3 3s1.34 3 3 3c0.81 0 1.5-0.3 2.04-0.8l7.12
+            4.02c-0.05 0.21-0.08 0.43-0.08 0.65 0 1.66 1.34 3 3 3s3-1.34
+            3-3-1.34-3-3-3z"/>
+          </svg>
+        </div>
+        <div class="control-btn download-btn" title="บันทึกลงเครื่อง">
+          <svg viewBox="0 0 24 24">
+            <path d="M5 20h14v-2H5v2zm7-18l-5
+            5h3v6h4v-6h3l-5-5z"/>
+          </svg>
+        </div>
+      </div>
     </div>
-    <div class="video-slide" data-index="1">
+
+    <div class="video-slide" data-index="1" data-likes="98">
       <video src="https://www.w3schools.com/html/movie.mp4" muted loop></video>
+      <div class="controls">
+        <div class="control-btn like-btn" title="กดใจ">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42
+            3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3
+            19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span class="count">98</span>
+        </div>
+        <div class="control-btn share-btn" title="แชร์">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 16.08c-0.76 0-1.44 0.3-1.96 0.77L8.91
+            12.7c0.05-0.23 0.09-0.46 0.09-0.7s-0.03-0.47-0.09-0.7L15.96
+            7.1c0.53 0.5 1.23 0.81 2.04 0.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3
+            1.34-3 3c0 0.24 0.04 0.47 0.09 0.7L8.04 9.9C7.5 9.4 6.81 9.1
+            6 9.1c-1.66 0-3 1.34-3 3s1.34 3 3 3c0.81 0 1.5-0.3 2.04-0.8l7.12
+            4.02c-0.05 0.21-0.08 0.43-0.08 0.65 0 1.66 1.34 3 3 3s3-1.34
+            3-3-1.34-3-3-3z"/>
+          </svg>
+        </div>
+        <div class="control-btn download-btn" title="บันทึกลงเครื่อง">
+          <svg viewBox="0 0 24 24">
+            <path d="M5 20h14v-2H5v2zm7-18l-5
+            5h3v6h4v-6h3l-5-5z"/>
+          </svg>
+        </div>
+      </div>
     </div>
-    <div class="video-slide" data-index="2">
+
+    <div class="video-slide" data-index="2" data-likes="45">
       <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" muted loop></video>
+      <div class="controls">
+        <div class="control-btn like-btn" title="กดใจ">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42
+            3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3
+            19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span class="count">45</span>
+        </div>
+        <div class="control-btn share-btn" title="แชร์">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 16.08c-0.76 0-1.44 0.3-1.96 0.77L8.91
+            12.7c0.05-0.23 0.09-0.46 0.09-0.7s-0.03-0.47-0.09-0.7L15.96
+            7.1c0.53 0.5 1.23 0.81 2.04 0.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3
+            1.34-3 3c0 0.24 0.04 0.47 0.09 0.7L8.04 9.9C7.5 9.4 6.81 9.1
+            6 9.1c-1.66 0-3 1.34-3 3s1.34 3 3 3c0.81 0 1.5-0.3 2.04-0.8l7.12
+            4.02c-0.05 0.21-0.08 0.43-0.08 0.65 0 1.66 1.34 3 3 3s3-1.34
+            3-3-1.34-3-3-3z"/>
+          </svg>
+        </div>
+        <div class="control-btn download-btn" title="บันทึกลงเครื่อง">
+          <svg viewBox="0 0 24 24">
+            <path d="M5 20h14v-2H5v2zm7-18l-5
+            5h3v6h4v-6h3l-5-5z"/>
+          </svg>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="nav-bottom">
-    <div class="tab active" data-tab="feed"><img src="https://img.icons8.com/ios-filled/50/ffffff/home.png"/><br>หน้าหลัก</div>
-    <div class="tab" data-tab="discover"><img src="https://img.icons8.com/ios-filled/50/ffffff/search.png"/><br>ค้นหา</div>
-    <div class="tab" data-tab="upload"><img src="https://img.icons8.com/ios-filled/50/ffffff/plus.png"/><br>อัปโหลด</div>
-    <div class="tab" data-tab="inbox"><img src="https://img.icons8.com/ios-filled/50/ffffff/chat--v1.png"/><br>ข้อความ</div>
-    <div class="tab" data-tab="profile"><img src="https://img.icons8.com/ios-filled/50/ffffff/user.png"/><br>โปรไฟล์</div>
+    <div class="tab active" data-tab="feed"><img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" /><br />หน้าหลัก</div>
+    <div class="tab" data-tab="discover"><img src="https://img.icons8.com/ios-filled/50/ffffff/search.png" /><br />ค้นหา</div>
+    <div class="tab" data-tab="upload"><img src="https://img.icons8.com/ios-filled/50/ffffff/plus.png" /><br />อัปโหลด</div>
+    <div class="tab" data-tab="inbox"><img src="https://img.icons8.com/ios-filled/50/ffffff/chat--v1.png" /><br />ข้อความ</div>
+    <div class="tab" data-tab="profile"><img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" /><br />โปรไฟล์</div>
   </div>
 
   <script>
@@ -67,7 +204,7 @@
     let current = 0;
 
     function showSlide(index) {
-      slides.forEach(slide => {
+      slides.forEach((slide) => {
         slide.style.transform = `translateY(${100 * (slide.dataset.index - index)}%)`;
         const video = slide.querySelector('video');
         if (Number(slide.dataset.index) === index) {
@@ -80,8 +217,11 @@
     }
 
     document.addEventListener('wheel', (e) => {
-      if (e.deltaY > 0) { if (current < slides.length - 1) current++; } 
-      else if (e.deltaY < 0) { if (current > 0) current--; }
+      if (e.deltaY > 0) {
+        if (current < slides.length - 1) current++;
+      } else if (e.deltaY < 0) {
+        if (current > 0) current--;
+      }
       showSlide(current);
     });
 
@@ -89,12 +229,65 @@
 
     // Highlight selected tab
     const tabs = document.querySelectorAll('.nav-bottom .tab');
-    tabs.forEach(tab => tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      // สามารถต่อเพิ่มฟังก์ชันรายหน้าได้ เช่น ไปหน้า ค้นหา / อัปโหลด
-      alert(`ไปหน้า: ${tab.dataset.tab}`);
-    }));
+    tabs.forEach((tab) =>
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        alert(`ไปหน้า: ${tab.dataset.tab}`);
+      })
+    );
+
+    // Like button
+    document.querySelectorAll('.like-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const countSpan = btn.querySelector('.count');
+        let count = parseInt(countSpan.textContent);
+        // Toggle like (simple logic)
+        if (btn.classList.contains('liked')) {
+          count--;
+          btn.classList.remove('liked');
+          btn.style.color = '#ccc';
+        } else {
+          count++;
+          btn.classList.add('liked');
+          btn.style.color = '#ff2e63';
+        }
+        countSpan.textContent = count;
+      });
+    });
+
+    // Share button
+    document.querySelectorAll('.share-btn').forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        const url = window.location.href + `#video${idx}`;
+        if (navigator.share) {
+          navigator
+            .share({
+              title: 'ดูวิดีโอนี้บน Mini TikTok',
+              url: url,
+            })
+            .catch((error) => alert('แชร์ไม่สำเร็จ'));
+        } else {
+          // fallback: copy url
+          navigator.clipboard.writeText(url);
+          alert('คัดลอกลิงก์แชร์เรียบร้อย:\n' + url);
+        }
+      });
+    });
+
+    // Download button
+    document.querySelectorAll('.download-btn').forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        const video = slides[idx].querySelector('video');
+        const src = video.src;
+        const a = document.createElement('a');
+        a.href = src;
+        a.download = `video_${idx + 1}.mp4`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+    });
   </script>
 </body>
 </html>
