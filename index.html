@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini TikTok Clone</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #000; color: #fff; }
+    .feed {
+      width: 100%; height: 100vh; position: relative;
+      overflow: hidden;
+    }
+    .video-slide {
+      width: 100%; height: 100%;
+      position: absolute; top: 0; left: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: #111;
+      transition: transform 0.5s ease-in-out;
+    }
+    .video-slide video {
+      max-height: 80%; max-width: 100%;
+      border-radius: 8px;
+    }
+    .nav-bottom {
+      position: absolute; bottom: 0; width: 100%;
+      height: 60px; background: rgba(20, 20, 20, 0.8);
+      display: flex; justify-content: space-around;
+      align-items: center;
+      font-size: 14px;
+    }
+    .nav-bottom div {
+      text-align: center; color: #aaa;
+    }
+    .nav-bottom div.active {
+      color: #fff;
+    }
+    .nav-bottom img {
+      width: 24px; height: 24px;
+      margin-bottom: 4px;
+      filter: invert(1);
+    }
+  </style>
+</head>
+<body>
+  <div class="feed" id="feed">
+    <div class="video-slide" data-index="0">
+      <video src="https://www.w3schools.com/html/mov_bbb.mp4" muted loop></video>
+    </div>
+    <div class="video-slide" data-index="1">
+      <video src="https://www.w3schools.com/html/movie.mp4" muted loop></video>
+    </div>
+    <div class="video-slide" data-index="2">
+      <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" muted loop></video>
+    </div>
+  </div>
+
+  <div class="nav-bottom">
+    <div class="tab active" data-tab="feed"><img src="https://img.icons8.com/ios-filled/50/ffffff/home.png"/><br>หน้าหลัก</div>
+    <div class="tab" data-tab="discover"><img src="https://img.icons8.com/ios-filled/50/ffffff/search.png"/><br>ค้นหา</div>
+    <div class="tab" data-tab="upload"><img src="https://img.icons8.com/ios-filled/50/ffffff/plus.png"/><br>อัปโหลด</div>
+    <div class="tab" data-tab="inbox"><img src="https://img.icons8.com/ios-filled/50/ffffff/chat--v1.png"/><br>ข้อความ</div>
+    <div class="tab" data-tab="profile"><img src="https://img.icons8.com/ios-filled/50/ffffff/user.png"/><br>โปรไฟล์</div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.video-slide');
+    let current = 0;
+
+    function showSlide(index) {
+      slides.forEach(slide => {
+        slide.style.transform = `translateY(${100 * (slide.dataset.index - index)}%)`;
+        const video = slide.querySelector('video');
+        if (Number(slide.dataset.index) === index) {
+          video.play();
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+    }
+
+    document.addEventListener('wheel', (e) => {
+      if (e.deltaY > 0) { if (current < slides.length - 1) current++; } 
+      else if (e.deltaY < 0) { if (current > 0) current--; }
+      showSlide(current);
+    });
+
+    showSlide(0);
+
+    // Highlight selected tab
+    const tabs = document.querySelectorAll('.nav-bottom .tab');
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      // สามารถต่อเพิ่มฟังก์ชันรายหน้าได้ เช่น ไปหน้า ค้นหา / อัปโหลด
+      alert(`ไปหน้า: ${tab.dataset.tab}`);
+    }));
+  </script>
+</body>
+</html>
